@@ -23,6 +23,7 @@ export default function FeedbackPage() {
 
   const [rating, setRating] = useState<number>(0);
   const [hoverRating, setHoverRating] = useState<number>(0);
+  const [showPopup, setShowPopup] = useState(false);
 
   // =========================================================
   // CARICAMENTO DATI DEL LOCALE DA SUPABASE
@@ -92,11 +93,13 @@ if (error) {
       }
     }
 
-    setTimeout(() => {
-      if (googleReviewUrl) {
-        window.location.href = googleReviewUrl;
-      }
-    }, 500);
+setShowPopup(true);
+
+setTimeout(() => {
+  if (googleReviewUrl) {
+    window.location.href = googleReviewUrl;
+  }
+}, 1200);
   }
 
   if (loading) {
@@ -111,6 +114,33 @@ if (error) {
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#050812] text-white">
+    {showPopup && (
+  <div
+    className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md"
+    role="dialog"
+    aria-modal="true"
+  >
+    <div className="w-[90%] max-w-sm rounded-[28px] border border-white/10 bg-[#080d18]/95 p-8 text-center shadow-2xl animate-[popupBounce_0.55s_ease-out]">
+      
+      <div className="mb-5 text-4xl">
+        ★
+      </div>
+
+      <h2 className="text-2xl font-semibold tracking-tight">
+        Grazie per il tuo feedback!
+      </h2>
+
+      <p className="mt-3 text-sm leading-6 text-white/65">
+        Completa la tua recensione su Google.
+      </p>
+
+      <div className="mt-6 text-xs text-white/35">
+        Stai per essere reindirizzato...
+      </div>
+
+    </div>
+  </div>
+)}
 
       {/* =========================================================
           BACKGROUND GLOW
