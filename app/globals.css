@@ -1,3 +1,11 @@
+@font-face {
+  font-family: "Airstrike";
+  src: url("/fonts/airstrikebold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 @import "tailwindcss";
 
 :root {

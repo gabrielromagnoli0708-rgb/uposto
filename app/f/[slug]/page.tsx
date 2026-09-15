@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 
 export default function FeedbackPage() {
   const params = useParams();
   const slug = params.slug as string;
+  const scanTracked = useRef(false);
 
   const [businessId, setBusinessId] = useState<string | null>(null);
 
@@ -52,11 +53,33 @@ if (error) {
   return;
 }
 
-      setBusinessId(data.id);
-      setBusinessName(data.nome);
-      setBusinessCategory(data.categoria ?? "");
-      setGoogleReviewUrl(data.google_review_url);
-        setLoading(false);
+setBusinessId(data.id);
+setBusinessName(data.nome);
+setBusinessCategory(data.categoria ?? "");
+setGoogleReviewUrl(data.google_review_url);
+
+// REGISTRA LA SCANSIONE
+if (!scanTracked.current) {
+  scanTracked.current = true;
+
+  const source = new URLSearchParams(window.location.search).get("source");
+
+  const { error: scanError } = await supabase
+    .from("scansioni")
+    .insert({
+      locale_id: data.id,
+      source:
+        source === "nfc" || source === "qr"
+          ? source
+          : null,
+    });
+
+  if (scanError) {
+    console.error("Errore salvataggio scansione:", scanError);
+  }
+}
+
+setLoading(false);
     }
 
     if (slug) {
