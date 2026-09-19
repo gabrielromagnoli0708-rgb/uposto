@@ -1,4 +1,12 @@
 @font-face {
+  font-family: "Coolvetica";
+  src: url("/fonts/Coolvetica Rg.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
   font-family: "Airstrike";
   src: url("/fonts/airstrikebold.ttf") format("truetype");
   font-weight: 700;
@@ -30,7 +38,7 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Coolvetica", Arial, Helvetica, sans-serif;
 }
 
 @keyframes popupBounce {
